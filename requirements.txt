@@ -1,0 +1,9 @@
+numpy
+pandas
+sqlalchemy
+pretty_html_table
+psycopg2-binary
+mysql-connector-python
+pymysql==0.10.1
+pretty_html_table
+fastapi
