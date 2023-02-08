@@ -45,7 +45,7 @@ def getData(Query,mailid):
 
 
 
-#password = input("Type your password and press enter:")
+password = input("Type your password and press enter:")
 
 #port = 485  # For starttls
 #smtp_server = "smtp.ionos.de"
@@ -55,7 +55,7 @@ def getData(Query,mailid):
 port = 587
 smtp_server = "smtp.gmail.com"
 sender_email = "movimento.messenger@gmail.com"
-password = 'qbpaoofdaogthlyk' #Gmail
+
 
 def sendMail(receiver_email,Subject,messageText):
     context = ssl.create_default_context()
