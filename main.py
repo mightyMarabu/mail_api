@@ -3,6 +3,7 @@ from typing import Union
 from fastapi import FastAPI, File, Form, UploadFile
 import requests
 from mail import *
+from fastMail import *
 
 app = FastAPI()
 
@@ -24,7 +25,10 @@ async def create_upload_file(file: Union[UploadFile, None] = None):
         return {"message": "No upload file sent"}
     else:
         print('success!')
-        sendEmail('u',286,'there is a file','now do something')
+
+        print (file)
+        sendEmail('u',286,'there is a file','now do something with '+ file.filename)
+        sendAttachementMail('sebastian.schmidt@ot-movimento.de','there is a file','now do something with '+ file.filename, file)
         return {"filename": file.filename}
 
 
@@ -46,4 +50,19 @@ async def sendTextEmail(emailfor,receiverID,Subject,message):
     sendEmail(emailfor,receiverID,Subject,message)
 
     
+### using fastmail ###
 
+@app.post("/email")
+async def simple_send(email: EmailSchema) -> JSONResponse:
+    html = """<p>Hi this test mail, thanks for using Fastapi-mail</p> """
+
+    message = MessageSchema(
+        subject="Fastapi-Mail module",
+        recipients=email.dict().get("email"),
+        #recipients="sebastian.schmidt@ot-movimento.de",
+        body=html,
+        subtype=MessageType.html)
+
+    fm = FastMail(conf)
+    await fm.send_message(message)
+    return JSONResponse(status_code=200, content={"message": "email has been sent"})

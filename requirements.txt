@@ -6,4 +6,6 @@ psycopg2-binary
 mysql-connector-python
 pymysql==0.10.1
 pretty_html_table
+
 fastapi
+fastapi_mail

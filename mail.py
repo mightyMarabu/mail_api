@@ -96,6 +96,28 @@ This message is sent from your beloved Bot."""
 #     messageText = "Hi "+receiver+",\n"+message
 #     sendMail(receiver_email,Subject,messageText)
 
+#############################################################
+def sendAttachementMail(receiver_email,Subject,messageText,attachement):
+    context = ssl.create_default_context()
+    message = """\
+Subject:""" + Subject + """
+
+""" + messageText +""" 
+This message is sent from your beloved Bot."""
+    
+    message.attach(attachement)
+    try:
+        with smtplib.SMTP(smtp_server, port) as server:
+            server.starttls(context=context)
+            server.ehlo()  # Can be omitted
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, message)
+        print("email send to "+receiver_email)
+        print(message)
+    except:
+        print("i can't make it..")
+#############################################################
+
 def sendEmail(emailfor,receiverID,Subject,message):
     if emailfor == 'u':
         receiver_email = getData(umail,receiverID)
