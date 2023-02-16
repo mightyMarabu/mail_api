@@ -10,6 +10,8 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+from supersecret import pw
+
 ### get Data ###
 
 emailfor = sys.argv[1]
@@ -45,7 +47,7 @@ def getData(Query,mailid):
 
 
 
-password = input("Type your password and press enter:")
+#password = input("Type your password and press enter:")
 
 #port = 485  # For starttls
 #smtp_server = "smtp.ionos.de"
@@ -55,6 +57,7 @@ password = input("Type your password and press enter:")
 port = 587
 smtp_server = "smtp.gmail.com"
 sender_email = "movimento.messenger@gmail.com"
+password = pw
 
 
 def sendMail(receiver_email,Subject,messageText):
@@ -92,3 +95,17 @@ This message is sent from your beloved Bot."""
 #     receiver = receiver_email.split('.')[0]
 #     messageText = "Hi "+receiver+",\n"+message
 #     sendMail(receiver_email,Subject,messageText)
+
+def sendEmail(emailfor,receiverID,Subject,message):
+    if emailfor == 'u':
+        receiver_email = getData(umail,receiverID)
+        receiver = receiver_email.split('.')[0]
+        messageText = "Hi "+receiver+",\n"+message
+        sendMail(receiver_email,Subject,messageText)
+        return{"email send to":receiver}
+    else:
+        receiver_email = getData(pmail,receiverID)
+        receiver = receiver_email.split('.')[0]
+        messageText = "Hi "+receiver+",\n"+message
+        sendMail(receiver_email,Subject,messageText)
+        return{"email send to":receiver}

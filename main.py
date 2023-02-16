@@ -1,12 +1,13 @@
 from typing import Union
 
-from fastapi import FastAPI, File, UploadFile
-
+from fastapi import FastAPI, File, Form, UploadFile
+import requests
 from mail import *
 
 app = FastAPI()
 
 
+### working ###
 @app.post("/files/")
 async def create_file(file: Union[bytes, None] = File(default=None)):
     if not file:
@@ -19,23 +20,30 @@ async def create_file(file: Union[bytes, None] = File(default=None)):
 async def create_upload_file(file: Union[UploadFile, None] = None):
     if not file:
         print('no file sent..!')
+        sendEmail('u',286,'no file','sorry')
         return {"message": "No upload file sent"}
     else:
         print('success!')
+        sendEmail('u',286,'there is a file','now do something')
         return {"filename": file.filename}
 
-@app.get("/sendAttachement/{emailfor}/{receiverID}/{Subject}/{message}/")
-async def sendEmail(emailfor,receiverID,Subject,message):
-    if emailfor == 'u':
-        receiver_email = getData(umail,receiverID)
-        receiver = receiver_email.split('.')[0]
-        messageText = "Hi "+receiver+",\n"+message
-        sendMail(receiver_email,Subject,messageText)
-    #    print(receiver_email)
-    else:
-        receiver_email = getData(pmail,receiverID)
-        receiver = receiver_email.split('.')[0]
-        messageText = "Hi "+receiver+",\n"+message
-        sendMail(receiver_email,Subject,messageText)
-        print('success!')
+
+@app.post("/filesforms/")
+async def create_file(
+    file: bytes = File(), fileb: UploadFile = File(), token: str = Form()
+):
+    return {
+        "file_size": len(file),
+        "token": token,
+        "fileb_content_type": fileb.content_type,
+    }
+
+
+### mail routes ###
+
+@app.get("/sendTextMail/{emailfor}/{receiverID}/{Subject}/{message}/")
+async def sendTextEmail(emailfor,receiverID,Subject,message):
+    sendEmail(emailfor,receiverID,Subject,message)
+
     
+
