@@ -13,10 +13,10 @@ class EmailSchema(BaseModel):
 conf = ConnectionConfig(
     MAIL_USERNAME = log_in,
     MAIL_PASSWORD = pw,
-    MAIL_FROM = "could_be@anyone.net",
+    MAIL_FROM = "anyone@outsideofhal.net",
     MAIL_PORT = 587,
     MAIL_SERVER = "smtp.gmail.com",
-    MAIL_FROM_NAME="Call me Dave9000",
+    MAIL_FROM_NAME="Dave Space",
     MAIL_STARTTLS = True,
     MAIL_SSL_TLS = False,
     USE_CREDENTIALS = True,
@@ -45,17 +45,18 @@ async def simple_send(email: EmailSchema) -> JSONResponse:
 @app.post("/sendFile")
 async def send_file(
     background_task: BackgroundTasks,
+    message: str = Form(...),
     file: UploadFile = File (...),
     email: EmailStr = Form(...)
     ) -> JSONResponse:
 
     message = MessageSchema(
-        subject="Fastapi-Mail module",
-        recipients=email.dict().get("email"),
-        #recipients=['sebastian.schmidt@ot-movimento.de'],
-        body=html,
+        subject="There is also stuff that works..",
+        recipients=[email],
+        #body="Simple background task",
+        body=message,
         subtype=MessageType.html,
-        attachements=[file])
+        attachments=[file])
 
     fm = FastMail(conf)
 
