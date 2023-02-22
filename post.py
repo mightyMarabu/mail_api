@@ -12,9 +12,9 @@ import requests
 #print (r)
 
 
-
-
-url = 'http://127.0.0.1:8000/email'
-token = {'email': 'sebastian.schmidt@ot-movimento.de'}
-r = requests.post(url, data=token)
-print (r)
+url = 'http://192.168.3.135:7001/email'
+mail = {"email": ["sebastian.schmidt@ot-movimento.de"]}
+#r = requests.post(url, data=body)
+#r = requests.post("http://192.168.3.135:7001/email", data={"email": ["user@example.com","sebastian.schmidt@ot-movimento.de"]})
+r = requests.post("http://192.168.3.135:7001/email")
+print (r.text)
