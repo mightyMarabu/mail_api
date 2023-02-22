@@ -8,7 +8,7 @@ from supersecret import pw, log_in
 
 class EmailSchema(BaseModel):
     email: List[EmailStr]
-
+    subject :str
 
 conf = ConnectionConfig(
     MAIL_USERNAME = log_in,
@@ -28,11 +28,11 @@ app = FastAPI()
 
 
 @app.post("/email")
-async def simple_send(email: EmailSchema) -> JSONResponse:
+async def simple_send(email: EmailSchema, subject) -> JSONResponse:
     html = """<p>Hi this test mail, thanks for using Fastapi-mail</p> """
 
     message = MessageSchema(
-        subject="Fastapi-Mail module",
+        subject=subject,
         recipients=email.dict().get("email"),
         #recipients=['sebastian.schmidt@ot-movimento.de'],
         body=html,
@@ -55,6 +55,28 @@ async def send_attachement(
         recipients=[email],
         #body="Simple background task",
         body=message,
+        subtype=MessageType.html,
+        attachments=[file])
+
+    fm = FastMail(conf)
+
+    background_task.add_task(fm.send_message,message)
+
+    return JSONResponse(status_code=200, content={"message": "done"})
+
+@app.post("/sendTest")
+async def send_test(
+    background_task: BackgroundTasks,
+    #message: str = Form(...),
+    file: UploadFile = File (...),
+    email: EmailStr = Form(...)
+    ) -> JSONResponse:
+
+    message = MessageSchema(
+        subject="There is also stuff that works..",
+        recipients=[email],
+        body="Simple background task",
+        #body=message,
         subtype=MessageType.html,
         attachments=[file])
 
