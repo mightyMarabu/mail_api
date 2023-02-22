@@ -8,7 +8,8 @@ from supersecret import pw, log_in
 
 class EmailSchema(BaseModel):
     email: List[EmailStr]
-    subject :str
+    subject: str
+    content: str
 
 conf = ConnectionConfig(
     MAIL_USERNAME = log_in,
@@ -28,14 +29,16 @@ app = FastAPI()
 
 
 @app.post("/email")
-async def simple_send(email: EmailSchema, subject) -> JSONResponse:
-    html = """<p>Hi this test mail, thanks for using Fastapi-mail</p> """
+async def simple_send(email: EmailSchema) -> JSONResponse:
+    
+    #html = """<p>%s</p> """, emailmessage
 
     message = MessageSchema(
-        subject=subject,
+        subject=email.dict().get("subject"),
         recipients=email.dict().get("email"),
         #recipients=['sebastian.schmidt@ot-movimento.de'],
-        body=html,
+        #body=html,
+        body = email.dict().get("content"),
         subtype=MessageType.html)
 
     fm = FastMail(conf)
