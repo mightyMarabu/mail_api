@@ -1,8 +1,19 @@
-FROM python
+FROM python:3.9
 
 # maintainer: Sebastian
 
-RUN pip install -r requirements.txt
+WORKDIR /app
 
+#RUN apt update && apt install -y unicorn
+
+ADD requirements.txt . 
+
+# install libs
+RUN pip install --no-cache-dir -r requirements.txt
+# add app
+COPY __init__.py .
+COPY standAloneFastapi.py .
+COPY supersecret.py .
 # fastapi
-RUN uvicorn standAloneFastapi:app
+
+CMD ["uvicorn", "standAloneFastapi:app", "--host", "0.0.0.0", "--port", "80"]

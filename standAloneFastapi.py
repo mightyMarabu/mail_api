@@ -43,7 +43,7 @@ async def simple_send(email: EmailSchema) -> JSONResponse:
     return JSONResponse(status_code=200, content={"message": "email has been sent"})
 
 @app.post("/sendFile")
-async def send_file(
+async def send_attachement(
     background_task: BackgroundTasks,
     message: str = Form(...),
     file: UploadFile = File (...),

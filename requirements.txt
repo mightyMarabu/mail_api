@@ -1,12 +1,13 @@
-numpy
-pandas
-sqlalchemy
-pretty_html_table
-psycopg2-binary
-mysql-connector-python
-pymysql==0.10.1
-pretty_html_table
+#numpy
+#pandas
+#sqlalchemy
+#pretty_html_table
+#psycopg2-binary
+#pysql-connector-python
+#pymysql==0.10.1
 
+uvicorn>=0.15.0,<0.16.0
 python-multipart
 fastapi
 fastapi_mail
+pydantic
