@@ -1,10 +1,20 @@
 # send post request
+
+# send post request
 import requests
 
 #url = 'http://192.168.3.135:7001/email'
-url = 'http://127.0.0.1:8000/email'
-headers={"Content-Type": "application/json; charset=utf-8"}
-data = {"email": ["sebastian.schmidt@ot-movimento.de"], "subject": "test betreff", "content": "test text"}
+#header={"Content-Type": "application/json; charset=utf-8"}
+#data = {"email": ["sebastian.schmidt@ot-movimento.de"], "subject": "test betreff", "content": "test text"}
 
-r = requests.post(url, json=data ,headers=headers)
+url = 'http://192.168.3.135:7001/sendFile'
+headers={"Content-Type": "multipart/form-data"}
+payload = {
+    "email": "sebastian.schmidt@ot-movimento.de",
+    "message": "Hi there! von hier aus geht's..."
+}
+
+file = {'file': open('docs/arnie.pdf', 'rb')}
+
+r = requests.post(url=url, data=payload, files=file)
 print (r.text)

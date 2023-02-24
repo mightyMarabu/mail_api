@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, Form, UploadFile, BackgroundTasks
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from pydantic import EmailStr, BaseModel
@@ -26,7 +27,17 @@ conf = ConnectionConfig(
 
 app = FastAPI()
 
+origins = [
+    "*"
+]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/email")
 async def simple_send(email: EmailSchema) -> JSONResponse:
@@ -71,7 +82,7 @@ async def send_attachement(
 async def send_test(
     background_task: BackgroundTasks,
     #message: str = Form(...),
-    file: UploadFile = File (...),
+    #file: UploadFile = File (...),
     email: EmailStr = Form(...)
     ) -> JSONResponse:
 
@@ -81,7 +92,8 @@ async def send_test(
         body="Simple background task",
         #body=message,
         subtype=MessageType.html,
-        attachments=[file])
+        #attachments=[file]
+        )
 
     fm = FastMail(conf)
 
