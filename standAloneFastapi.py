@@ -7,6 +7,8 @@ from typing import List
 
 from supersecret import pw, log_in
 
+from db_sync import *
+
 class EmailSchema(BaseModel):
     email: List[EmailStr]
     subject: str
@@ -78,25 +80,11 @@ async def send_attachement(
 
     return JSONResponse(status_code=200, content={"message": "done"})
 
-@app.post("/sendTest")
-async def send_test(
-    background_task: BackgroundTasks,
-    #message: str = Form(...),
-    #file: UploadFile = File (...),
-    email: EmailStr = Form(...)
-    ) -> JSONResponse:
-
-    message = MessageSchema(
-        subject="There is also stuff that works..",
-        recipients=[email],
-        body="Simple background task",
-        #body=message,
-        subtype=MessageType.html,
-        #attachments=[file]
-        )
-
-    fm = FastMail(conf)
-
-    background_task.add_task(fm.send_message,message)
-
-    return JSONResponse(status_code=200, content={"message": "done"})
+@app.get("/db_sync")
+async def sync():
+    try:
+        syncDB()
+        return JSONResponse(status_code=200, content={"message": "Everything went fine. Praise your developers for the good work they're doing almost ervery day ;-)"})
+    except:
+        return JSONResponse(status_code=500, content={"message": "oh shit! lay back, get a coffee and inform Sebastian.. this may take a while."})
+        
