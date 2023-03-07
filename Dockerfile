@@ -9,6 +9,7 @@ WORKDIR /app
 ADD requirements.txt . 
 
 # install libs
+RUN pip3 install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 # add app
 COPY __init__.py .
