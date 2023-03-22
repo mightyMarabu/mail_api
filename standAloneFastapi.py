@@ -20,7 +20,7 @@ conf = ConnectionConfig(
     MAIL_FROM = "anyone@outsideofhal.net",
     MAIL_PORT = 587,
     MAIL_SERVER = "smtp.gmail.com",
-    MAIL_FROM_NAME="Dave Space",
+    MAIL_FROM_NAME = "Dave" ,
     MAIL_STARTTLS = True,
     MAIL_SSL_TLS = False,
     USE_CREDENTIALS = True,
@@ -63,11 +63,25 @@ async def send_attachement(
     background_task: BackgroundTasks,
     message: str = Form(...),
     file: UploadFile = File (...),
-    email: EmailStr = Form(...)
+    email: EmailStr = Form(...),
+    sender: str = Form(...) 
     ) -> JSONResponse:
 
+    conf = ConnectionConfig(
+    MAIL_USERNAME = log_in,
+    MAIL_PASSWORD = pw,
+    MAIL_FROM = "anyone@outsideofhal.net",
+    MAIL_PORT = 587,
+    MAIL_SERVER = "smtp.gmail.com",
+    MAIL_FROM_NAME = sender + " von Movimento" ,
+    MAIL_STARTTLS = True,
+    MAIL_SSL_TLS = False,
+    USE_CREDENTIALS = True,
+    VALIDATE_CERTS = True
+    )
+
     message = MessageSchema(
-        subject="There is also stuff that works..",
+        subject="Rezeptvorschlag",
         recipients=[email],
         #body="Simple background task",
         body=message,
