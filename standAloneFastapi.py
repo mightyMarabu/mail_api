@@ -61,10 +61,11 @@ async def simple_send(email: EmailSchema) -> JSONResponse:
 @app.post("/sendFile")
 async def send_attachement(
     background_task: BackgroundTasks,
+    mailSubject: str = Form(...),
     message: str = Form(...),
     file: UploadFile = File (...),
     email: EmailStr = Form(...),
-    sender: str = Form(...) 
+    sender: str = Form(...)
     ) -> JSONResponse:
 
     conf = ConnectionConfig(
@@ -81,7 +82,7 @@ async def send_attachement(
     )
 
     message = MessageSchema(
-        subject="Rezeptvorschlag",
+        subject= mailSubject, #"Rezeptvorschlag",
         recipients=[email],
         #body="Simple background task",
         body=message,
