@@ -38,6 +38,8 @@ ae = "select id, name, vorname, namenszusatz as info, strasse, plz, ort, telefon
 r = "select id_auftraege as aid, angefordert_am, eingegangen_am, abgerechnet_am from rezept"
 artikel = "select id, mengeneinheit, artikel_nr, kurzbeschreibung, beschreibung, hmv_nr, preis \
             from artikelliste where id_artikelliste_katalog = 21 and id_artikelliste_gruppe = 1102"
+re = "select * from rechnung"
+
 
 def getData(Query):
 #    connection = pymysql.connect(host='85.214.197.218', user='movimento', password='SEVzbI1KqZ2094KU', db='hecrasoft-movimento', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
@@ -87,6 +89,7 @@ def syncDB():
     df_ae = pd.DataFrame(getData(ae))
     df_r = pd.DataFrame(getData(r))
     df_artikel = pd.DataFrame(getData(artikel))
+    df_re = pd.DataFrame(getData(re))
     print ("Hecrasoft-Data sucessfully loaded!")
     # do some decoding / encoding bullshit to fix php-windows bug
     #df_p["name"]=df_p["name"].str.encode('windows-1252').str.decode('utf-8')
@@ -137,6 +140,7 @@ def syncDB():
     df_ls.to_sql('lieferschein', engine, if_exists='append',index=False)
     df_r.to_sql('rezepte', engine, if_exists='replace',index=False)
     #df_artikel.to_sql('artikel_gwq_pg23', engine, if_exists='replace',index=False)
+    df_re.to_sql('rechnung', engine, if_exists='replace',index=False)
 
     print("update lieferschein")
     df_ae.to_sql('aerzte', engine, if_exists='append',index=False)
