@@ -85,7 +85,7 @@ async def send_attachement(
         subject= mailSubject, #"Rezeptvorschlag",
         recipients=[email],
         #body="Simple background task",
-        body=message,
+        body=message+"<br><br>Dies ist eine automatisch generierte Email. Bitte antworten Sie an info@ot-movimento.de oder vorname.name@ot-movimento.de Danke.",
         subtype=MessageType.html,
         attachments=[file])
 
