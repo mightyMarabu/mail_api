@@ -127,7 +127,8 @@ def syncDB():
     #connect.set_client_encoding('UTF8')
     #engine = create_engine(connect)
 
-    engine = create_engine('postgresql+psycopg2://service_user:service@192.168.3.64:5432/mov_db',encoding="utf-8")
+    #engine = create_engine('postgresql+psycopg2://service_user:service@192.168.3.64:5432/mov_db',encoding="utf-8")
+    engine = create_engine('postgresql+psycopg2://service_user:service@192.168.3.64:5432/mov_db')
     #engine = create_engine('postgresql+psycopg2://service_user:service@192.168.3.157:54321/mov_db')
     df_diff_p.to_sql('patients', engine, if_exists='replace',index=False)
     df_diff_a.to_sql('auftraege', engine, if_exists='append',index=False)
