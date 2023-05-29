@@ -38,8 +38,8 @@ ae = "select id, name, vorname, namenszusatz as info, strasse, plz, ort, telefon
 r = "select id_auftraege as aid, angefordert_am, eingegangen_am, abgerechnet_am from rezept"
 artikel = "select id, mengeneinheit, artikel_nr, kurzbeschreibung, beschreibung, hmv_nr, preis \
             from artikelliste where id_artikelliste_katalog = 21 and id_artikelliste_gruppe = 1102"
-re = "select * from rechnung"
-
+re = "select r.id, r.id_auftraege, r.lfdnum, r.erstellt_am, r.gedruckt_am, r.faellig_am, r.bezahlt_am, r.eigenanteil, r.mahnung, r.mahnung_1_am,r.mahnung_2_am,r.mahnung_3_am, a.gesamt_brutto, a.eigenanteil_mwstvoll, a.eigenanteil_mwsthalb from `hecrasoft-movimento`.rechnung as r inner join `hecrasoft-movimento`.auftraege as a on r.id_auftraege = a.id"
+#re = "select * from rechnung"
 
 def getData(Query):
 #    connection = pymysql.connect(host='85.214.197.218', user='movimento', password='SEVzbI1KqZ2094KU', db='hecrasoft-movimento', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
