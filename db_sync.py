@@ -88,7 +88,7 @@ def syncDB():
     df_kv = pd.DataFrame(getData(kv))
     df_ae = pd.DataFrame(getData(ae))
     df_r = pd.DataFrame(getData(r))
-    df_artikel = pd.DataFrame(getData(artikel))
+    #df_artikel = pd.DataFrame(getData(artikel))
     df_re = pd.DataFrame(getData(re))
     print ("Hecrasoft-Data sucessfully loaded!")
     # do some decoding / encoding bullshit to fix php-windows bug
@@ -98,11 +98,11 @@ def syncDB():
     #df_p["ort"]=df_p["ort"].str.encode('windows-1252').str.decode('utf-8')
     #df_a["bemerkung"]=df_a["bemerkung"].str.encode('windows-1252').str.decode('utf-8')
 
-    df_p["name"]=df_p["name"]
-    df_p["vorname"]=df_p["vorname"]
-    df_p["strasse"]=df_p["strasse"]
-    df_p["ort"]=df_p["ort"]
-    df_a["bemerkung"]=df_a["bemerkung"]
+    #df_p["name"]=df_p["name"]
+    #df_p["vorname"]=df_p["vorname"]
+    #df_p["strasse"]=df_p["strasse"]
+    #df_p["ort"]=df_p["ort"]
+    #df_a["bemerkung"]=df_a["bemerkung"]
 
 
     # get pg-Data
