@@ -49,11 +49,6 @@ def getData(Query,mailid):
 
 #password = input("Type your password and press enter:")
 
-#port = 485  # For starttls
-#smtp_server = "smtp.ionos.de"
-#password = 'Mo%22Off365'
-#sender_email = "messenger@ot-movimento.de"
-
 port = 587
 smtp_server = "smtp.gmail.com"
 sender_email = "movimento.messenger@gmail.com"
@@ -78,23 +73,6 @@ This message is sent from your beloved Bot."""
     except:
         print("i can't make it..")
 
-### run script ####
-    #emailfor = 'u'
-    #receiverID = 286
-    #Subject = "Post ohne Anhang - Unbedingt ansehen!"
-    #message = "testmail"
-
-# if emailfor == 'u':
-#     receiver_email = getData(umail,receiverID)
-#     receiver = receiver_email.split('.')[0]
-#     messageText = "Hi "+receiver+",\n"+message
-#     sendMail(receiver_email,Subject,messageText)
-# #    print(receiver_email)
-# else:
-#     receiver_email = getData(pmail,receiverID)
-#     receiver = receiver_email.split('.')[0]
-#     messageText = "Hi "+receiver+",\n"+message
-#     sendMail(receiver_email,Subject,messageText)
 
 #############################################################
 def sendAttachementMail(receiver_email,Subject,messageText,attachement):
